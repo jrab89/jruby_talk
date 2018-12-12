@@ -6,14 +6,14 @@ class: middle, center
 background-image: url(jruby-logo-logo-with-type-xlarge.png)
 
 ???
-Hi! My name is Jeff Rabovsky.
+Hi! I'm Jeff
 I'm a senior engineer at a company called Centro.
 We make software tools for advertisers.
 We're also just 1 block south of here so that walking over easy.
 I'm on team that writes Python code to automate the operators of our Ruby on Rails application.
-So you might wonder why I, as a Ruby as Ops person, am here to speak to Java people?
+So you might wonder why I, as a person who does Ruby, Python, and Operations, am speaking at a Java Meetup?
 Don't Ruby people have their own Meetups they go to?
-Well, it's to introduce you to an awesome project called JRuby.
+We do, and I go to those too, but I'm also here to introduce you to an awesome project called JRuby.
 
 ---
 
@@ -60,9 +60,9 @@ Here's some open source Ruby projects that you may have heard of or used.
 ???
 Rails is a big one. It's really the project that got people outside of Japan excited about Ruby.
 It's a fullstack web framework.
-It was extracted from the Basecamp project management software made by 37signals,
-which is actually a Chicago based company.
-It was open sourced in 2004, and has pretty big since then.
+It was extracted from Basecamp, the project management software made by 37signals.
+They're actually a Chicago based company.
+Rails was open sourced in 2004, and has gotten really popular since then.
 
 ---
 
@@ -124,9 +124,8 @@ $ java Circle 2
 
 ???
 And here's how you'd run that.
-Note that compilation step.
-You'd probably use a build tool like Maven or Gradle,
-but hey, this works.
+I'm using this amazing build tool called 'javac'
+But you could use a build tool like Maven or Gradle if you want.
 
 ---
 
@@ -210,6 +209,7 @@ This means that while you can write multithreaded Ruby code, you can't actually 
 In more recent versions of Ruby, you can have parellel I/O and native code extensions running in the same Ruby process.
 This is helpful for doing things like making HTTP requests or parsing JSON, but it's still not ideal.
 JRuby has no such limitations. You get Java threads and Java GC. Both of which are amazing.
+And your Ruby code gets just in time complied.
 
 ---
 
@@ -231,19 +231,40 @@ pool.shutdown
 pool.wait_for_termination
 ```
 
+???
+To show off what you can do with JRuby's concurrency,
+here's a command line program that computes the prime factors of integers up to some number.
+It's using a fixed size thread pool, where the number of threads is parametized.
+And it just hands the pool all the work and waits for it to finish.
+
 ---
 
 ```sh
 $ time ruby prime_factors.rb 10000000 1
 ruby prime_factors.rb 10000000 1  91.33s user 2.37s system 99% cpu 1:33.80 total
+$ time ruby prime_factors.rb 10000000 16
+ruby prime_factors.rb 10000000 16  76.71s user 0.97s system 99% cpu 1:17.77 total
 $ time jruby prime_factors.rb 10000000 1
 jruby prime_factors.rb 10000000 1  373.74s user 4.41s system 444% cpu 1:25.01 total
 $ time jruby prime_factors.rb 10000000 16
 jruby prime_factors.rb 10000000 16  125.74s user 17.97s system 449% cpu 31.976 total
 ```
 
+???
+Computing the prime factors of integers up to ten million in C Ruby with a single thread takes about 1.5 minutes.
+With 16 threads it doesn't get any better.
+And with JRuby using a single thread performance is about the same.
+With JRuby and 16 threads we see a substantial speedup.
+
 ---
 
 # There's more!
 
 https://jrab89.github.io/
+
+???
+JRuby also has great interop with JVM languages.
+So can call Java from your Ruby and Ruby from your Java!
+That's probably too much detail for today,
+but here's a link to my blog where I show how that works by
+driving JDBC from Ruby! Thanks!
